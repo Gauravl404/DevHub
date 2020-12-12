@@ -1,1 +1,3 @@
-"# DevHub" 
+# DevHub
+
+A socio-freelancing platform
