@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import Page from "src/components/Page";
 import Toolbar from "./Toolbar";
 import PostCard from "./PostCard";
 import data from "./data";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,7 @@ const PostList = () => {
         <Box mt={3}>
           <Grid container spacing={3}>
             {posts.map((post) => (
-              <Grid item key={post.id} lg={12} md={12} xs={12}>
+              <Grid item key={post.id} lg={9} md={12} xs={12}>
                 <PostCard className={classes.PostCard} post={post} />
               </Grid>
             ))}

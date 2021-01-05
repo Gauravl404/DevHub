@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
@@ -53,6 +53,9 @@ const Learn = () => {
     setVideos(videos);
     setSelectedVideo(videos[0]);
   }
+  useEffect(() => {
+    handleSubmit("Github");
+  }, []);
 
   return (
     <Page className={classes.root} title='Learn'>

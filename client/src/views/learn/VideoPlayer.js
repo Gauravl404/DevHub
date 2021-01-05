@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const VideoPlayer = ({ className, video, ...rest }) => {
+const VideoPlayer = ({ video, ...rest }) => {
   const classes = useStyles();
   if (!video) return <div>Loading...</div>;
   const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;

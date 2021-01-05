@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    fontWeight: 800,
+    fontFamily: "Georgia",
+    color: "black",
   },
 }));
 
@@ -29,12 +32,16 @@ function NavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static'>
+      <AppBar position='static' color='transparent'>
         <Toolbar>
           <Typography variant='h2' className={classes.title}>
             Devhub
           </Typography>
-          <Button color='inherit' onClick={(e) => clickHandle(e)}>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={(e) => clickHandle(e)}
+          >
             Login
           </Button>
         </Toolbar>

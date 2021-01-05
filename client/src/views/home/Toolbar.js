@@ -31,7 +31,7 @@ const Toolbar = ({ className, ...rest }) => {
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
-      <Box mt={3}>
+      <Box mt={1}>
         <Card>
           <CardContent>
             <Box>
