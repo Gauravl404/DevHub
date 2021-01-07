@@ -45,7 +45,7 @@ const Learn = () => {
       params: {
         part: "snippet",
         maxResults: 5,
-        key: "AIzaSyC8UuCm0yOg4tM7unKFbaRBuAjD99JqC04",
+        key: "process.env.API_KEY",
         q: searchTerm,
       },
     });
