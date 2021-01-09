@@ -7,6 +7,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Divider from "@material-ui/core/Divider";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -15,7 +20,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Divider from "@material-ui/core/Divider";
+
 import { CardActionArea } from "@material-ui/core";
 
 //import Image from "src/static/images/products/product_1.jpg";
@@ -29,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   expand: {
     transform: "rotate(0deg)",
-    marginLeft: "auto",
+
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
@@ -39,6 +44,17 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  comment: {
+    marginLeft: "auto",
+  },
+  commentSection: {
+    width: "100%",
+
+    backgroundColor: theme.palette.background.default,
+  },
+  inline: {
+    display: "inline",
   },
 }));
 
@@ -92,7 +108,6 @@ const PostCard = ({ className, post, ...rest }) => {
       </CardContent>
       <CardActions disableSpacing>
         <Typography variant='h4'>{likes}</Typography>
-
         <IconButton
           aria-label='add to favorites'
           onClick={(e) => handleLiked(e)}
@@ -102,6 +117,7 @@ const PostCard = ({ className, post, ...rest }) => {
         <IconButton aria-label='share'>
           <ShareIcon />
         </IconButton>
+        <Typography className={classes.comment}>Comments</Typography>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -115,11 +131,83 @@ const PostCard = ({ className, post, ...rest }) => {
       </CardActions>
       <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
-          <Typography paragraph>COMMENTS</Typography>
-          <Typography paragraph>nice one</Typography>
-          <Typography paragraph>well done !</Typography>
-          <Typography paragraph>good work</Typography>
-          <Typography>awesome</Typography>
+          <Divider />
+          <List className={classes.commentSection}>
+            <ListItem alignItems='flex-start'>
+              <ListItemAvatar>
+                <Avatar
+                  alt='Remy Sharp'
+                  src='https://res.cloudinary.com/devhubimg/image/upload/v1609787709/gj.jpg'
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary='Brunch this weekend?'
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component='span'
+                      variant='body2'
+                      className={classes.inline}
+                      color='textPrimary'
+                    >
+                      Ali Connors
+                    </Typography>
+                    {" — I'll be in your neighborhood doing errands this…"}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <Divider variant='inset' component='li' />
+            <ListItem alignItems='flex-start'>
+              <ListItemAvatar>
+                <Avatar
+                  alt='Travis Howard'
+                  src='https://res.cloudinary.com/devhubimg/image/upload/v1609787709/vt.jpg'
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary='Summer BBQ'
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component='span'
+                      variant='body2'
+                      className={classes.inline}
+                      color='textPrimary'
+                    >
+                      to Scott, Alex, Jennifer
+                    </Typography>
+                    {" — Wish I could come, but I'm out of town this…"}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <Divider variant='inset' component='li' />
+            <ListItem alignItems='flex-start'>
+              <ListItemAvatar>
+                <Avatar
+                  alt='Cindy Baker'
+                  src='https://res.cloudinary.com/devhubimg/image/upload/v1609787709/rv.jpg'
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary='Oui Oui'
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component='span'
+                      variant='body2'
+                      className={classes.inline}
+                      color='textPrimary'
+                    >
+                      Sandra Adams
+                    </Typography>
+                    {" — Do you have Paris recommendations? Have you ever…"}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          </List>
         </CardContent>
       </Collapse>
     </Card>
