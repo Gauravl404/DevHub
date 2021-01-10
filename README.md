@@ -1,4 +1,4 @@
 # DevHub
 
 A socio-freelancing platform for devs from all over the world
-Added by ravi singh
+Added by Gaurav
