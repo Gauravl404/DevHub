@@ -45,11 +45,6 @@ const Learn = () => {
       params: {
         part: "snippet",
         maxResults: 5,
-<<<<<<< Updated upstream
-        key: process.env.API_KEY,
-=======
-        key: "AIzaSyCIIYmhm4bPwIDBPRtkwvZRDgz7AIl3vyA",
->>>>>>> Stashed changes
         q: searchTerm,
       },
     });
