@@ -16,7 +16,7 @@ const Particles = ({ children }) => {
               },
             },
             color: {
-              value: "#ffffff",
+              value: "#039dfc",
             },
             shape: {
               type: "circle",

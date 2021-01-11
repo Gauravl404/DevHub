@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 800,
     paddingBottom: theme.spacing(3),
     margin: "auto",
+    color: "black",
   },
   Button: {
     zIndex: 10,
@@ -55,6 +56,13 @@ const useStyles = makeStyles((theme) => ({
 const WhiteTextTypography = withStyles({
   root: {
     color: "#FFFFFF",
+  },
+})(Typography);
+
+const BlueTextTypography = withStyles({
+  root: {
+    color: "#039dfc",
+    fontSize: 80,
   },
 })(Typography);
 
@@ -80,13 +88,14 @@ const LandingPage = () => {
         <Box
           display='flex'
           flexDirection='column'
-          height='680px'
+          height='90vh'
           maxWidth='60%'
           justifyContent='center'
         >
           <Container className={classes.container}>
             <WhiteTextTypography variant='h1'>
-              Welcome to DevHub
+              Welcome to
+              <BlueTextTypography variant='h1'>DevHub</BlueTextTypography>
             </WhiteTextTypography>
             <div className={classes.body}>
               <WhiteTextTypography variant='body1'>

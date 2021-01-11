@@ -15,9 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    fontWeight: 800,
-    fontFamily: "Georgia",
-    color: "black",
+    fontWeight: 600,
+    fontFamily: "Cursive",
+    color: "#039dfc",
+    cursor: "pointer",
   },
 }));
 
@@ -35,7 +36,7 @@ function NavBar() {
       <AppBar position='static' color='transparent'>
         <Toolbar>
           <Typography variant='h2' className={classes.title}>
-            Devhub
+            DevHub
           </Typography>
           <Button
             variant='contained'
