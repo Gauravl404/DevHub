@@ -11,7 +11,15 @@ import {
   SvgIcon,
   makeStyles,
 } from "@material-ui/core";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { Search as SearchIcon } from "react-feather";
+import { Link } from 'react-router-dom';
+import CreateTeam from "./CreateTeam";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -27,18 +35,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({ className, ...rest }) =>{
   const classes = useStyles();
   const [user, setUser] = useState(0);
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>
       <Box display='flex' justifyContent='flex-end'>
-        {user === 0 && (
-          <Button color='primary' variant='contained'>
-            Create your Own Team
+        <div>
+          <Button color='primary' variant='contained' onClick={handleClickOpen}> Create your Own Team
+            
           </Button>
-        )}
+           <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+           <DialogTitle id="form-dialog-title">Create Team</DialogTitle>
+           <DialogContent>
+                   <CreateTeam/>
+             
+           </DialogContent>
+           <DialogActions>
+             <Button onClick={handleClose} color="primary">
+               Cancel
+             </Button>
+             
+           </DialogActions>
+         </Dialog>
+        </div>
+        
       </Box>
       <Box mt={3}>
         <Card>
@@ -72,6 +104,7 @@ const Toolbar = ({ className, ...rest }) => {
     </div>
   );
 };
+
 
 Toolbar.propTypes = {
   className: PropTypes.string,

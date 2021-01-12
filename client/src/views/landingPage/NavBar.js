@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     fontWeight: 800,
     fontFamily: "Georgia",
-    color: "black",
+    color: "white",
   },
 }));
 
