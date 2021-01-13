@@ -75,7 +75,7 @@ const RegisterIndividual = () => {
                 ),
               })}
               onSubmit={() => {
-                navigate("/app/dashboard", { replace: true });
+                navigate("/app/home", { replace: true });
               }}
             >
               {({
