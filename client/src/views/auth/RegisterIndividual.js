@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -15,6 +15,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import Page from "src/components/Page";
+import userSetContext from "src/App";
+import { userContext } from "src/App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,14 @@ const useStyles = makeStyles((theme) => ({
 const RegisterIndividual = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  //const setAuth = useContext(userSetContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(userContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app/home", { replace: false });
+    }
+  }, [isAuthenticated]);
 
   return (
     <Page className={classes.root} title='Register'>
@@ -74,8 +84,41 @@ const RegisterIndividual = () => {
                   "This field must be checked"
                 ),
               })}
-              onSubmit={() => {
-                navigate("/app/dashboard", { replace: true });
+              onSubmit={async (values) => {
+                const { email, firstName, github, lastName, password } = values;
+                const handle = github;
+                const name = firstName + " " + lastName;
+                const type = 1;
+
+                try {
+                  const body = { name, email, password, type, handle };
+                  const response = await fetch(
+                    "http://localhost:5000/auth/register",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                      body: JSON.stringify(body),
+                    }
+                  );
+
+                  const parseRes = await response.json();
+
+                  if (parseRes.jwtToken) {
+                    localStorage.setItem("token", parseRes.jwtToken);
+                    setIsAuthenticated(true);
+
+                    navigate("/app/home", { replace: true });
+                    //toast.success("Register Successfully");
+                  } else {
+                    setIsAuthenticated(false);
+                    //toast.error(parseRes);
+                  }
+                } catch (err) {
+                  console.error(err.message);
+                  alert("Something went wrong , please try again !");
+                }
               }}
             >
               {({

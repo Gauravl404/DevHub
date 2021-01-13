@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   Container,
   Grid,
   makeStyles,
   Typography,
-  List,
   ListItem,
-  IconButton,
   ListItemAvatar,
   Avatar,
   ListItemText,
-  ListItemSecondaryAction,
   Divider,
 } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
