@@ -34,6 +34,7 @@ const routes = [
       { path: "learn", element: <Learn /> },
       { path: "settings", element: <Settings /> },
       { path: "profile", element: <Acount /> },
+      { path: "/", element: <Navigate to='/home' /> },
       { path: "*", element: <Navigate to='/404' /> },
     ],
   },
