@@ -100,7 +100,7 @@ const LandingPage = () => {
             <div className={classes.body}>
               <WhiteTextTypography variant='body1'>
                 A single Socio-freelancing platform , where you can find your
-                dream team and dream projects from worlds best organisation,
+                dream team and dream projects from world's best organisation,
               </WhiteTextTypography>
             </div>
             <Button
