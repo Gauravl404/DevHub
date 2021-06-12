@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import CCarousel from './carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import Page from "src/components/Page";
@@ -60,6 +61,8 @@ const Learn = () => {
   return (
     <Page className={classes.root} title='Learn'>
       <Container maxWidth={false}>
+        <h1>Featured Courses!!!</h1>
+        <CCarousel />
         <Toolbar onSubmit={handleSubmit} />
         <Box className={classes.box}>
           <Grid container spacing={3} className={classes.container}>
@@ -75,6 +78,7 @@ const Learn = () => {
           <Pagination color='primary' count={3} size='small' />
         </Box>
       </Container>
+      
     </Page>
   );
 };

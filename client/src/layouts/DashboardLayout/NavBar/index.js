@@ -64,6 +64,16 @@ const items = [
     title: "Profile",
   },
   {
+    href: "/app/recruiterprofile",
+    icon: UserIcon,
+    title: "Recruiter Profile",
+  },
+  {
+    href: "/app/recruiterproject",
+    icon: UserIcon,
+    title: "Recruiter Project",
+  },
+  {
     href: "/app/Settings",
     icon: SettingsIcon,
     title: "Settings",
