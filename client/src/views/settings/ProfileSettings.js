@@ -63,7 +63,7 @@ const ProfileSettings = ({ className, user, ...rest }) => {
                 name='firstName'
                 onChange={handleChange}
                 required
-                value={values.full_name}
+                value={values.first_name}
                 variant='outlined'
               />
             </Grid>
@@ -74,7 +74,7 @@ const ProfileSettings = ({ className, user, ...rest }) => {
                 name='lastName'
                 onChange={handleChange}
                 required
-                value={values.full_name}
+                value={values.last_name}
                 variant='outlined'
               />
             </Grid>
@@ -107,7 +107,7 @@ const ProfileSettings = ({ className, user, ...rest }) => {
                 name='country'
                 onChange={handleChange}
                 required
-                value={values?.country_code}
+                value={values?.address}
                 variant='outlined'
               />
             </Grid>
@@ -120,7 +120,7 @@ const ProfileSettings = ({ className, user, ...rest }) => {
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values?.country_code}
+                value={values?.address}
                 variant='outlined'
               >
                 {states.map((option) => (

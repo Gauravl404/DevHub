@@ -31,33 +31,33 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Profile = ({ className, ...rest }) => {
+const Profile = ({ className, user, ...rest }) => {
   const classes = useStyles();
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent>
         <Box alignItems='center' display='flex' flexDirection='column'>
-          <Avatar className={classes.avatar} src={user.avatar} />
+          <Avatar className={classes.avatar} src={user.image} />
           <Typography color='textPrimary' gutterBottom variant='h3'>
-            {user.name}
+            {`${user.first_name} ${user.last_name}`}
           </Typography>
           <Typography color='textSecondary' variant='body1'>
-            {`${user.city} ${user.country}`}
+            {`${user.address}`}
           </Typography>
           <Typography
             className={classes.dateText}
             color='textSecondary'
             variant='body1'
           >
-            {`${moment().format("hh:mm A")} ${user.timezone}`}
+            {`${moment().format("hh:mm A")}`}
           </Typography>
         </Box>
       </CardContent>
       <Divider />
       <CardActions>
         <Button color='primary' fullWidth variant='text'>
-          Upload picture
+          Update picture
         </Button>
       </CardActions>
     </Card>

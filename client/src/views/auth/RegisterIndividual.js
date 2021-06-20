@@ -87,11 +87,18 @@ const RegisterIndividual = () => {
               onSubmit={async (values) => {
                 const { email, firstName, github, lastName, password } = values;
                 const handle = github;
-                const name = firstName + " " + lastName;
+
                 const type = "dev";
 
                 try {
-                  const body = { name, email, password, type, handle };
+                  const body = {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    type,
+                    handle,
+                  };
                   const response = await fetch(
                     "http://localhost:5000/auth/register",
                     {

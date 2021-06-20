@@ -13,7 +13,8 @@ router.post("/register", validinfo, async (req, res) => {
   try {
     //1. destructure the req.body {name, email,password}
 
-    const { name, email, password, teamId, type, handle } = req.body;
+    const { firstname, lastName, email, password, teamId, type, handle } =
+      req.body;
 
     //2. check if user already exists ? if yes throw error\
     const user = await pool.query("SELECT * FROM users WHERE mail_id = $1", [
@@ -31,8 +32,8 @@ router.post("/register", validinfo, async (req, res) => {
 
     //4. insert the user into the database
     const newUser = await pool.query(
-      "INSERT INTO users (full_name,mail_id,password,type,handle_url) VALUES ($1, $2, $3, $4, $5) RETURNING *;",
-      [name, email, bycryptPassword, type, handle]
+      "INSERT INTO users (first_name,mail_id,password,type,handle_url,last_name) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *;",
+      [firstname, email, bycryptPassword, type, handle, lastName]
     );
 
     //5. generate the jwt token

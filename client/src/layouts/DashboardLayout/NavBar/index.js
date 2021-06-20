@@ -107,7 +107,7 @@ const NavBar = ({ onMobileClose, openMobile, user }) => {
           to='/app/profile'
         />
         <Typography className={classes.name} color='textPrimary' variant='h5'>
-          {user.full_name}
+          {`${user.first_name} ${user.last_name}`}
         </Typography>
         <Typography color='textSecondary' variant='body2'>
           {user.type === "dev" ? "developer" : "Recruiter"}
