@@ -32,16 +32,9 @@ const useStyles = makeStyles(() => ({
   root: {},
 }));
 
-const ProfileSettings = ({ className, ...rest }) => {
+const ProfileSettings = ({ className, user, ...rest }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: "Gaurav",
-    lastName: "jaiswal",
-    email: "GJ@gmail.com",
-    phone: "798215166",
-    state: "Delhi",
-    country: "India",
-  });
+  const [values, setValues] = useState(user);
 
   const handleChange = (event) => {
     setValues({
@@ -70,7 +63,7 @@ const ProfileSettings = ({ className, ...rest }) => {
                 name='firstName'
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={values.full_name}
                 variant='outlined'
               />
             </Grid>
@@ -81,7 +74,7 @@ const ProfileSettings = ({ className, ...rest }) => {
                 name='lastName'
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={values.full_name}
                 variant='outlined'
               />
             </Grid>
@@ -92,7 +85,7 @@ const ProfileSettings = ({ className, ...rest }) => {
                 name='email'
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={values.mail_id}
                 variant='outlined'
               />
             </Grid>
@@ -103,7 +96,7 @@ const ProfileSettings = ({ className, ...rest }) => {
                 name='phone'
                 onChange={handleChange}
                 type='number'
-                value={values.phone}
+                value={values.mail_id}
                 variant='outlined'
               />
             </Grid>
@@ -114,7 +107,7 @@ const ProfileSettings = ({ className, ...rest }) => {
                 name='country'
                 onChange={handleChange}
                 required
-                value={values.country}
+                value={values?.country_code}
                 variant='outlined'
               />
             </Grid>
@@ -127,7 +120,7 @@ const ProfileSettings = ({ className, ...rest }) => {
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.state}
+                value={values?.country_code}
                 variant='outlined'
               >
                 {states.map((option) => (
@@ -152,6 +145,7 @@ const ProfileSettings = ({ className, ...rest }) => {
 
 ProfileSettings.propTypes = {
   className: PropTypes.string,
+  user: PropTypes.object,
 };
 
 export default ProfileSettings;

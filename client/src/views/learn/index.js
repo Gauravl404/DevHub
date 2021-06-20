@@ -45,7 +45,7 @@ const Learn = () => {
       params: {
         part: "snippet",
         maxResults: 5,
-        key: "",
+        key: "AIzaSyCwYcgcpLAZbue4NfDAaUoQDO5bfVNUGx4",
         q: searchTerm,
         type: "video",
       },

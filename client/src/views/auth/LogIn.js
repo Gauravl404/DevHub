@@ -35,13 +35,13 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useContext(userContext);
+  const { setIsAuthenticated } = useContext(userContext);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/app/home", { replace: false });
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/app/home", { replace: false });
+  //   }
+  // }, []);
 
   return (
     <Page className={classes.root} title='Login'>
@@ -88,7 +88,7 @@ const LogIn = () => {
                   if (parseRes.jwtToken) {
                     localStorage.setItem("token", parseRes.jwtToken);
                     setIsAuthenticated(true);
-                    navigate("/app/home", { replace: true });
+                    // navigate("/app/home", { replace: true });
                     // toast.success("Logged in Successfully");
                   } else {
                     setIsAuthenticated(false);

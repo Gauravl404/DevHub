@@ -36,7 +36,7 @@ router.post("/register", validinfo, async (req, res) => {
     );
 
     //5. generate the jwt token
-    const jwtToken = jwtGenerator(newUser.rows[0].id);
+    const jwtToken = jwtGenerator(newUser.rows[0].user_id);
     res.json({ jwtToken });
   } catch (err) {
     console.error(err.message);
@@ -72,7 +72,7 @@ router.post("/login", validinfo, async (req, res) => {
     }
 
     //5. generate the jwt token
-    const jwtToken = jwtGenerator(user.rows[0].id);
+    const jwtToken = jwtGenerator(user.rows[0].user_id);
     res.json({ jwtToken });
   } catch (err) {
     console.error(err.message);

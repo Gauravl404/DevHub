@@ -88,7 +88,7 @@ const RegisterIndividual = () => {
                 const { email, firstName, github, lastName, password } = values;
                 const handle = github;
                 const name = firstName + " " + lastName;
-                const type = 1;
+                const type = "dev";
 
                 try {
                   const body = { name, email, password, type, handle };

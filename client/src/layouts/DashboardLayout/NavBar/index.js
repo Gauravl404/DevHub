@@ -110,7 +110,7 @@ const NavBar = ({ onMobileClose, openMobile, user }) => {
           {user.full_name}
         </Typography>
         <Typography color='textSecondary' variant='body2'>
-          {user.type === 1 ? "Developer" : "Recruiter"}
+          {user.type === "dev" ? "developer" : "Recruiter"}
         </Typography>
       </Box>
       <Divider />
