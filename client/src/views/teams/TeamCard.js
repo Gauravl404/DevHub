@@ -2,22 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import {
-  Avatar,
   Box,
   Card,
   CardContent,
   CardActionArea,
   CardActions,
   CardMedia,
-  Divider,
-  Grid,
   Button,
   Typography,
   makeStyles,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import GetAppIcon from "@material-ui/icons/GetApp";
+//import AccessTimeIcon from "@material-ui/icons/AccessTime";
+//import GetAppIcon from "@material-ui/icons/GetApp";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,12 +48,12 @@ const TeamCard = ({ className, team, ...rest }) => {
           component='img'
           alt='Team'
           height='240'
-          image={team.teamImage}
-          title={team.teamName}
+          image={"https://source.unsplash.com/random"}
+          title={team.name}
         />
         <CardContent>
           <Typography gutterBottom variant='h2' component='h2'>
-            {team.teamName}
+            {team.name}
           </Typography>
           <Typography
             variant='body2'
@@ -71,20 +68,20 @@ const TeamCard = ({ className, team, ...rest }) => {
           </Typography>
 
           <Typography gutterBottom variant='h5' component='h4'>
-            Total Members : {team.teamSize}
+            Total Members : {team.total}
           </Typography>
           <Typography gutterBottom variant='h5' component='h4'>
-            Total Projects : {team.totalProjects}
+            Total Projects : {0}
           </Typography>
           <Box display='flex' alignContent='center'>
             <Typography gutterBottom variant='h5' component='legend'>
               Ratings :{" "}
             </Typography>
-            <Rating name='team-rating' value={team.teamRatings} readOnly />
+            <Rating name='team-rating' value={1} readOnly />
           </Box>
 
           <Typography gutterBottom variant='h5' component='h4'>
-            Require : {team.Requirements}
+            Require : {"none"}
           </Typography>
         </CardContent>
       </CardActionArea>

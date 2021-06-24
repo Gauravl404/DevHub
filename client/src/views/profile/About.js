@@ -58,7 +58,7 @@ const About = ({ className, user, ...rest }) => {
             Age : {"22"}
           </Typography>
           <Typography color='textPrimary' gutterBottom variant='body1'>
-            Date of birth : {"10th feb 2000"}
+            Date of birth : {user.dob}
           </Typography>
           <Typography color='textPrimary' gutterBottom variant='body1'>
             Portfolio : {user.handle_url}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -15,6 +15,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import Page from "src/components/Page";
+import { userSetContext } from "src/App";
+import { userContext } from "src/App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,14 @@ const useStyles = makeStyles((theme) => ({
 const RegisterIndividual = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { isAuthenticated, setIsAuthenticated } = useContext(userContext);
+  const { getProfile } = useContext(userSetContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app/home", { replace: false });
+    }
+  }, [isAuthenticated]);
 
   return (
     <Page className={classes.root} title='Register'>
@@ -52,6 +62,9 @@ const RegisterIndividual = () => {
                 website: "",
                 lastName: "",
                 password: "",
+                address: "",
+                type: "",
+                dob: "",
                 policy: false,
               }}
               validationSchema={Yup.object().shape({
@@ -61,10 +74,10 @@ const RegisterIndividual = () => {
                   .required("Email is required"),
                 firstName: Yup.string()
                   .max(255)
-                  .required("First name is required"),
+                  .required("company name is required"),
                 lastName: Yup.string()
                   .max(255)
-                  .required("Last name is required"),
+                  .required("manager name is required"),
                 password: Yup.string()
                   .max(255)
                   .required("password is required"),
@@ -74,8 +87,62 @@ const RegisterIndividual = () => {
                   "This field must be checked"
                 ),
               })}
-              onSubmit={() => {
-                navigate("/app/home", { replace: true });
+              onSubmit={async (values) => {
+                const {
+                  email,
+                  firstName,
+                  website,
+                  lastName,
+                  password,
+                  address,
+                  dob,
+                } = values;
+                const handle = website;
+
+                const type = "org";
+                const gender = "O";
+
+                try {
+                  const body = {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    type,
+                    gender,
+                    address,
+                    dob,
+                    handle,
+                  };
+                  console.log(body);
+                  const response = await fetch(
+                    "http://localhost:5000/auth/register",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                      body: JSON.stringify(body),
+                    }
+                  );
+
+                  const parseRes = await response.json();
+
+                  if (parseRes.jwtToken) {
+                    localStorage.setItem("token", parseRes.jwtToken);
+                    setIsAuthenticated(true);
+                    getProfile();
+
+                    navigate("/app/home", { replace: true });
+                    //toast.success("Register Successfully");
+                  } else {
+                    setIsAuthenticated(false);
+                    //toast.error(parseRes);
+                  }
+                } catch (err) {
+                  console.error(err.message);
+                  alert("Something went wrong , please try again !");
+                }
               }}
             >
               {({
@@ -137,6 +204,18 @@ const RegisterIndividual = () => {
                     variant='outlined'
                   />
                   <TextField
+                    error={Boolean(touched.address && errors.address)}
+                    fullWidth
+                    helperText={touched.address && errors.address}
+                    label='address'
+                    margin='normal'
+                    name='address'
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.address}
+                    variant='outlined'
+                  />
+                  <TextField
                     error={Boolean(touched.email && errors.email)}
                     fullWidth
                     helperText={touched.email && errors.email}
@@ -161,6 +240,19 @@ const RegisterIndividual = () => {
                     type='password'
                     value={values.password}
                     variant='outlined'
+                  />
+                  <TextField
+                    id='datetime-local'
+                    label='since'
+                    type='date'
+                    name='dob'
+                    onChange={handleChange}
+                    value={values.dob}
+                    defaultValue='2017-05-24'
+                    className={classes.dob}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                   <Box alignItems='center' display='flex' ml={-1}>
                     <Checkbox

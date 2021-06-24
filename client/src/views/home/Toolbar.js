@@ -32,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({ className, setref, ...rest }) => {
   const classes = useStyles();
 
   const [message, setMessage] = useState("");
-  const [images, setImage] = useState([]);
-  const [preview, setPreview] = useState([]);
+  const [images, setImage] = useState();
+  const [preview, setPreview] = useState();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -45,28 +45,60 @@ const Toolbar = ({ className, ...rest }) => {
   };
   const selectimage = (e) => {
     e.preventDefault();
-    setImage((prev) => [...prev, e.target.files[0]]);
-    setPreview((prev) => [...prev, URL.createObjectURL(e.target.files[0])]);
+    setImage(e.target.files[0]);
+    setPreview(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const body = { message: message, images: images };
-    const uri = "http://localhost:5000/dashboard/post-feed";
+    if (!images) return;
 
-    const responce = await fetch(uri, {
-      method: "POST",
-      headers: { jwt_token: localStorage.token },
-      body: body,
-    });
+    const reader = new FileReader();
+    reader.readAsDataURL(images);
+    reader.onloadend = () => {
+      uploadImage(reader.result, message);
+    };
+    reader.onerror = () => {
+      console.error("AHHHHHHHH!!");
+      //setErrMsg('something went wrong!');
+    };
 
-    const parsedata = responce.json();
+    const uploadImage = async (base64EncodedImage, message) => {
+      try {
+        await fetch("http://localhost:5000/dashboard/postfeed", {
+          method: "POST",
+          body: JSON.stringify({ data: base64EncodedImage, message: message }),
+          headers: {
+            jwt_token: localStorage.token,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:3000",
+            "Access-Control-Allow-Credentials": "true",
+          },
+        });
+        setImage();
+        setPreview();
+        setMessage("");
+        setref(true);
+      } catch (err) {
+        console.error(err);
+        // setErrMsg('Something went wrong!');
+      }
+    };
+    // const body = { message, images };
 
-    if (parsedata) {
-      setPreview([]);
-      setImage([]);
-      setMessage("");
-    }
+    // const responce = await fetch("http://localhost:5000/dashboard/postfeed", {
+    //   method: "POST",
+    //   headers: { jwt_token: localStorage.token },
+    //   body: body,
+    // });
+
+    // const parsedata = responce.json();
+
+    // if (parsedata) {
+    //   setPreview([]);
+    //   setImage([]);
+    //   setMessage("");
+    // }
   };
 
   return (
@@ -101,15 +133,7 @@ const Toolbar = ({ className, ...rest }) => {
                     marginTop='20px'
                     flex='75%'
                   >
-                    {preview.map((pre) => (
-                      <img
-                        key={pre.key}
-                        width='100'
-                        height='100'
-                        src={pre}
-                        alt=''
-                      />
-                    ))}
+                    <img width='100' height='100' src={preview} alt='' />
                   </Box>
                 )}
                 <Box

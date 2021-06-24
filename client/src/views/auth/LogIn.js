@@ -16,7 +16,7 @@ import {
 import FacebookIcon from "src/icons/Facebook";
 import GoogleIcon from "src/icons/Google";
 import Page from "src/components/Page";
-import { userContext } from "src/App";
+import { userContext, userSetContext } from "src/App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +36,7 @@ const LogIn = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const { setIsAuthenticated } = useContext(userContext);
+  const { getProfile } = useContext(userSetContext);
 
   // useEffect(() => {
   //   if (isAuthenticated) {
@@ -88,7 +89,8 @@ const LogIn = () => {
                   if (parseRes.jwtToken) {
                     localStorage.setItem("token", parseRes.jwtToken);
                     setIsAuthenticated(true);
-                    // navigate("/app/home", { replace: true });
+                    getProfile();
+                    navigate("/app/home", { replace: true });
                     // toast.success("Logged in Successfully");
                   } else {
                     setIsAuthenticated(false);

@@ -49,27 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 function generate(element) {
   return [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
   ].map((value) =>
     React.cloneElement(element, {
       key: value,
@@ -99,12 +79,38 @@ renderRow.propTypes = {
 
 const PostList = () => {
   const classes = useStyles();
-  const [posts] = useState(data);
+  const [posts, setPosts] = useState([]);
+  const [ref, setref] = useState(false);
+
+  const getdata = () => {
+    fetch("http://localhost:5000/dashboard/postfeed", {
+      method: "GET",
+      headers: {
+        jwt_token: localStorage.token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setPosts(data))
+      .then(setref(false));
+  };
+
+  useEffect(() => {
+    getdata();
+  }, [ref]);
+
+  useEffect(() => {
+    try {
+      getdata();
+    } catch (err) {
+      console.error(err.message);
+      alert("Something went wrong , please try again !");
+    }
+  }, []);
 
   return (
     <Page className={classes.root} title='Home'>
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar setref={setref} />
         <Box mt={3}>
           <Grid container spacing={2}>
             <Grid item spacing={1} lg={9} md={12} xs={12} container>

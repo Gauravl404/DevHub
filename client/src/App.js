@@ -44,26 +44,27 @@ const App = () => {
     console.log(user);
   }, [user]);
 
+  const getProfile = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/dashboard/", {
+        method: "POST",
+        headers: { jwt_token: localStorage.token },
+      });
+
+      const parseData = await res.json();
+
+      console.log(parseData);
+      setUser(parseData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     console.log(isAuthenticated);
     if (isAuthenticated) {
-      const getProfile = async () => {
-        try {
-          const res = await fetch("http://localhost:5000/dashboard/", {
-            method: "POST",
-            headers: { jwt_token: localStorage.token },
-          });
-
-          const parseData = await res.json();
-
-          console.log(parseData);
-          setUser(parseData);
-          navigate("/app/home", { replace: false });
-        } catch (err) {
-          console.error(err.message);
-        }
-      };
       getProfile();
+      navigate("/app/home", { replace: false });
     } else {
       navigate("/", { replace: false });
     }
@@ -82,7 +83,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <userSetContext.Provider value={{ user, setUser }}>
+      <userSetContext.Provider value={{ user, getProfile }}>
         <userContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
           {routing}
         </userContext.Provider>

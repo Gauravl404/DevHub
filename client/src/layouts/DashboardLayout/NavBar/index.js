@@ -103,14 +103,14 @@ const NavBar = ({ onMobileClose, openMobile, user }) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.image}
+          src={user?.image}
           to='/app/profile'
         />
         <Typography className={classes.name} color='textPrimary' variant='h5'>
-          {`${user.first_name} ${user.last_name}`}
+          {`${user?.first_name} ${user?.last_name}`}
         </Typography>
         <Typography color='textSecondary' variant='body2'>
-          {user.type === "dev" ? "developer" : "Recruiter"}
+          {user?.type === "dev" ? "developer" : "Recruiter"}
         </Typography>
       </Box>
       <Divider />
@@ -166,6 +166,7 @@ NavBar.propTypes = {
 NavBar.defaultProps = {
   onMobileClose: () => {},
   openMobile: false,
+  user: null,
 };
 
 export default NavBar;
