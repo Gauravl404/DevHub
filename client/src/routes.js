@@ -10,6 +10,7 @@ import NotFoundView from "src/views/errors/NotFoundView";
 import Home from "src/views/home";
 import Teams from "src/views/teams";
 import Projects from "src/views/projects";
+import RecProjects from "src/views/recruiterproject";
 import Settings from "src/views/settings";
 import Learn from "src/views/learn";
 import Workspace from "src/views/workspace";
@@ -17,6 +18,7 @@ import RegisterIndividual from "src/views/auth/RegisterIndividual";
 import RegisterOrg from "src/views/auth/RegisterOrg";
 import LandingPage from "src/views/landingPage/LandingPage";
 import Acount from "src/views/profile";
+import RecAcount from "src/views/recruiterprofile";
 //import SettingsView from "src/views/settings/SettingsView";
 
 const routes = [
@@ -34,7 +36,12 @@ const routes = [
       { path: "learn", element: <Learn /> },
       { path: "settings", element: <Settings /> },
       { path: "profile", element: <Acount /> },
+<<<<<<< HEAD
+      { path: "recruiterproject", element: <RecProjects />},
+      { path: "recruiterprofile", element: <RecAcount />},
+=======
       { path: "/", element: <Navigate to='/home' /> },
+>>>>>>> gaurav
       { path: "*", element: <Navigate to='/404' /> },
     ],
   },

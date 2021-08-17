@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const About = ({ className, user, ...rest }) => {
+const About = ({ className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -46,22 +46,22 @@ const About = ({ className, user, ...rest }) => {
           </Typography>
           <Divider />
           <Typography color='textPrimary' gutterBottom variant='body1'>
-            Lives in : {user.address}
+            Lives in : {user.city}
           </Typography>
           <Typography color='textPrimary' gutterBottom variant='body1'>
-            Country : {"India"}
+            Country : {user.country}
           </Typography>
           <Typography color='textPrimary' gutterBottom variant='body1'>
-            Gender : {user.gender === "M" ? "male" : "female"}
+            Gender : {user.gender}
           </Typography>
           <Typography color='textPrimary' gutterBottom variant='body1'>
-            Age : {"22"}
+            Age : {user.age}
           </Typography>
           <Typography color='textPrimary' gutterBottom variant='body1'>
             Date of birth : {user.dob}
           </Typography>
           <Typography color='textPrimary' gutterBottom variant='body1'>
-            Portfolio : {user.handle_url}
+            Works at : {user.works}
           </Typography>
         </Box>
       </CardContent>

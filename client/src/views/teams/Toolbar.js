@@ -14,10 +14,10 @@ import {
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+//import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Search as SearchIcon } from "react-feather";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import CreateTeam from "./CreateTeam";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,9 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({ className, user, setrefresh, ...rest }) => {
   const classes = useStyles();
-  const [user, setUser] = useState(0);
 
   const [open, setOpen] = useState(false);
 
@@ -63,7 +62,11 @@ const Toolbar = ({ className, ...rest }) => {
           >
             <DialogTitle id='form-dialog-title'>Create Team</DialogTitle>
             <DialogContent>
-              <CreateTeam />
+              <CreateTeam
+                user={user}
+                setrefresh={setrefresh}
+                handleClose={handleClose}
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color='primary'>

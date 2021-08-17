@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-
-import { Box, Container, Grid, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
+import { Box, Container, Grid, makeStyles , Button} from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import Page from "src/components/Page";
 import Toolbar from "./Toolbar";
@@ -19,30 +18,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Projects = () => {
+const RecProjects = () => {
   const classes = useStyles();
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    try {
-      fetch("http://localhost:5000/dashboard/projects", {
-        method: "GET",
-        headers: {
-          jwt_token: localStorage.token,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => setProjects(data));
-    } catch (err) {
-      console.error(err.message);
-      alert("Something went wrong , please try again !");
-    }
-  }, []);
+  const [projects] = useState(data);
 
   return (
     <Page className={classes.root} title='Projects'>
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar/>
+        
         <Box mt={3}>
           <Grid container spacing={3}>
             {projects.map((project) => (
@@ -63,4 +47,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default RecProjects;

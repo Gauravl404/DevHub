@@ -29,7 +29,13 @@ const useStyles = makeStyles(() => ({
   title: { marginLeft: 40 },
 }));
 
-const TopBar = ({ className, onMobileNavOpen, onIsAuthenticated, ...rest }) => {
+const TopBar = ({
+  className,
+  onMobileNavOpen,
+  onIsAuthenticated,
+  setUser,
+  ...rest
+}) => {
   const classes = useStyles();
   const [notifications] = useState([]);
   const [mails] = useState([]);
@@ -50,6 +56,7 @@ const TopBar = ({ className, onMobileNavOpen, onIsAuthenticated, ...rest }) => {
       e.preventDefault();
       onIsAuthenticated(false);
       localStorage.removeItem("token");
+      setUser();
       setAnchorEl(null);
       navigate("/", { replace: true });
     } catch (err) {

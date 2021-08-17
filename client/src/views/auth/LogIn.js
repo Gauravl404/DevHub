@@ -16,7 +16,7 @@ import {
 import FacebookIcon from "src/icons/Facebook";
 import GoogleIcon from "src/icons/Google";
 import Page from "src/components/Page";
-import { userContext } from "src/App";
+import { userContext, userSetContext } from "src/App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,13 +35,14 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useContext(userContext);
+  const { setIsAuthenticated } = useContext(userContext);
+  const { getProfile } = useContext(userSetContext);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/app/home", { replace: false });
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/app/home", { replace: false });
+  //   }
+  // }, []);
 
   return (
     <Page className={classes.root} title='Login'>
@@ -88,6 +89,7 @@ const LogIn = () => {
                   if (parseRes.jwtToken) {
                     localStorage.setItem("token", parseRes.jwtToken);
                     setIsAuthenticated(true);
+                    getProfile();
                     navigate("/app/home", { replace: true });
                     // toast.success("Logged in Successfully");
                   } else {

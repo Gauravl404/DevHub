@@ -12,6 +12,9 @@ export const userSetContext = React.createContext();
 const App = () => {
   const routing = useRoutes(routes);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState();
+
   const navigate = useNavigate();
 
   const checkAuthenticated = async () => {
@@ -23,40 +26,68 @@ const App = () => {
 
       const parseRes = await res.json();
 
-      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      setIsAuthenticated(parseRes);
     } catch (err) {
       console.error(err.message);
     }
   };
 
   useEffect(() => {
-    checkAuthenticated();
+    if (localStorage.token) {
+      checkAuthenticated();
+    } else {
+      navigate("/", { replace: false });
+    }
   }, []);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
+  const getProfile = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/dashboard/", {
+        method: "POST",
+        headers: { jwt_token: localStorage.token },
+      });
+
+      const parseData = await res.json();
+
+      console.log(parseData);
+      setUser(parseData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   useEffect(() => {
     console.log(isAuthenticated);
+    if (isAuthenticated) {
+      getProfile();
+      navigate("/app/home", { replace: false });
+    } else {
+      navigate("/", { replace: false });
+    }
   }, [isAuthenticated]);
 
   // const setAuth = (boolean) => {
   //   setIsAuthenticated(boolean);
   // };
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/", { replace: false });
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/", { replace: false });
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      {/* // <userSetContext.Provider value={setAuth}> */}
-      <userContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-        {routing}
-      </userContext.Provider>
-      {/* </userSetContext.Provider> */}
+      <userSetContext.Provider value={{ user, getProfile }}>
+        <userContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+          {routing}
+        </userContext.Provider>
+      </userSetContext.Provider>
     </ThemeProvider>
   );
 };

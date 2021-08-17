@@ -15,8 +15,15 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import Page from "src/components/Page";
-import userSetContext from "src/App";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import { userSetContext } from "src/App";
 import { userContext } from "src/App";
+
+//import KeyboardDatePicker from "@material-ui/pickers/KeyboardDatePicker";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +38,14 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3),
   },
+  dob: {
+    margin: theme.spacing(2),
+
+    width: "80%",
+  },
+  gender: {
+    margin: theme.spacing(1),
+  },
 }));
 
 const RegisterIndividual = () => {
@@ -38,6 +53,7 @@ const RegisterIndividual = () => {
   const navigate = useNavigate();
   //const setAuth = useContext(userSetContext);
   const { isAuthenticated, setIsAuthenticated } = useContext(userContext);
+  const { getProfile } = useContext(userSetContext);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -62,6 +78,9 @@ const RegisterIndividual = () => {
                 github: "",
                 lastName: "",
                 password: "",
+                gender: "",
+                address: "",
+                dob: "",
                 policy: false,
               }}
               validationSchema={Yup.object().shape({
@@ -85,13 +104,33 @@ const RegisterIndividual = () => {
                 ),
               })}
               onSubmit={async (values) => {
-                const { email, firstName, github, lastName, password } = values;
+                const {
+                  email,
+                  firstName,
+                  github,
+                  lastName,
+                  password,
+                  gender,
+                  address,
+                  dob,
+                } = values;
                 const handle = github;
-                const name = firstName + " " + lastName;
-                const type = 1;
+
+                const type = "dev";
 
                 try {
-                  const body = { name, email, password, type, handle };
+                  const body = {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    type,
+                    gender,
+                    address,
+                    dob,
+                    handle,
+                  };
+                  console.log(body);
                   const response = await fetch(
                     "http://localhost:5000/auth/register",
                     {
@@ -108,6 +147,7 @@ const RegisterIndividual = () => {
                   if (parseRes.jwtToken) {
                     localStorage.setItem("token", parseRes.jwtToken);
                     setIsAuthenticated(true);
+                    getProfile();
 
                     navigate("/app/home", { replace: true });
                     //toast.success("Register Successfully");
@@ -204,6 +244,53 @@ const RegisterIndividual = () => {
                     type='password'
                     value={values.password}
                     variant='outlined'
+                  />
+                  <TextField
+                    error={Boolean(touched.address && errors.address)}
+                    fullWidth
+                    helperText={touched.address && errors.address}
+                    label='address'
+                    margin='normal'
+                    name='address'
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.address}
+                    variant='outlined'
+                  />
+                  <div className={classes.gender}>
+                    <FormLabel component='legend'>Gender</FormLabel>
+                    <RadioGroup
+                      row
+                      aria-label='position'
+                      name='gender'
+                      value={values.gender}
+                      onChange={handleChange}
+                      defaultValue='top'
+                    >
+                      <FormControlLabel
+                        value='M'
+                        control={<Radio color='primary' />}
+                        label='Male'
+                      />
+                      <FormControlLabel
+                        value='F'
+                        control={<Radio color='primary' />}
+                        label='Female'
+                      />
+                    </RadioGroup>
+                  </div>
+                  <TextField
+                    id='datetime-local'
+                    label='Date of birth'
+                    type='date'
+                    name='dob'
+                    onChange={handleChange}
+                    value={values.dob}
+                    defaultValue='2017-05-24'
+                    className={classes.dob}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                   <Box alignItems='center' display='flex' ml={-1}>
                     <Checkbox
