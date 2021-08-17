@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Grid, makeStyles } from "@material-ui/core";
 import Page from "src/components/Page";
 import Profile from "./Profile";
 import Activity from "./Activity";
 import About from "./About";
 import Earning from "./Earning";
+import { userContext, userSetContext } from "src/App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,16 +28,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Account = () => {
   const classes = useStyles();
+  const { isAuthenticated, setIsAuthenticated } = useContext(userContext);
+  const { user, setUser } = useContext(userSetContext);
 
   return (
     <Page className={classes.root} title='Account'>
       <Container maxWidth='lg' className={classes.container}>
         <Grid container spacing={3} direction='column' lg={4} md={6} xs={12}>
           <Grid item>
-            <Profile />
+            <Profile user={user} />
           </Grid>
           <Grid item>
-            <About />
+            <About user={user} />
           </Grid>
         </Grid>
         <Grid container spacing={3} lg={8} md={6} xs={12}>
@@ -52,7 +55,7 @@ const Account = () => {
           md={12}
           xs={12}
         >
-          <Grid item lg={3} md={4} xs={12}>
+          {/* <Grid item lg={3} md={4} xs={12}>
             <Earning />
           </Grid>
           <Grid item lg={3} md={4} xs={12}>
@@ -63,7 +66,7 @@ const Account = () => {
           </Grid>
           <Grid item lg={3} md={4} xs={12}>
             <Earning />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

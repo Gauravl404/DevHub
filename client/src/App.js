@@ -7,21 +7,87 @@ import GlobalStyles from "src/components/GlobalStyles";
 import theme from "src/theme";
 import routes from "src/routes";
 
+export const userContext = React.createContext();
+export const userSetContext = React.createContext();
 const App = () => {
   const routing = useRoutes(routes);
-  // const [authenticated, setauthenticated] = useState(false);
-  // const navigate = useNavigate();
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState();
+
+  const navigate = useNavigate();
+
+  const checkAuthenticated = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/auth/verify", {
+        method: "POST",
+        headers: { jwt_token: localStorage.token },
+      });
+
+      const parseRes = await res.json();
+
+      setIsAuthenticated(parseRes);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.token) {
+      checkAuthenticated();
+    } else {
+      navigate("/", { replace: false });
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
+  const getProfile = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/dashboard/", {
+        method: "POST",
+        headers: { jwt_token: localStorage.token },
+      });
+
+      const parseData = await res.json();
+
+      console.log(parseData);
+      setUser(parseData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    console.log(isAuthenticated);
+    if (isAuthenticated) {
+      getProfile();
+      navigate("/app/home", { replace: false });
+    } else {
+      navigate("/", { replace: false });
+    }
+  }, [isAuthenticated]);
+
+  // const setAuth = (boolean) => {
+  //   setIsAuthenticated(boolean);
+  // };
 
   // useEffect(() => {
-  //   if (!authenticated) {
+  //   if (!isAuthenticated) {
   //     navigate("/", { replace: false });
   //   }
-  // }, [authenticated]);
+  // }, [isAuthenticated]);
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      {routing}
+      <userSetContext.Provider value={{ user, getProfile }}>
+        <userContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+          {routing}
+        </userContext.Provider>
+      </userSetContext.Provider>
     </ThemeProvider>
   );
 };

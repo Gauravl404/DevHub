@@ -79,7 +79,7 @@ const PostCard = ({ className, post, ...rest }) => {
       <CardHeader
         avatar={
           <Avatar aria-label='user' className={classes.avatar}>
-            G
+            {post.title.substr(0, 1)}
           </Avatar>
         }
         action={
@@ -87,17 +87,17 @@ const PostCard = ({ className, post, ...rest }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={post.username}
-        subheader={post.createdAt}
+        title={post.title}
+        subheader={post.created_at}
       />
       <Divider />
       <CardActionArea>
         <CardMedia
           component='img'
           className={classes.media}
-          alt={post.username}
+          alt={post.title}
           image={post.media}
-          title={post.username}
+          title={post.title}
         />
       </CardActionArea>
       <Divider />

@@ -88,7 +88,7 @@ const ProjectCard = ({ className, project, ...rest }) => {
       <CardHeader
         avatar={
           <Avatar aria-label='recipe' className={classes.avatar}>
-            R
+            {project.title.substr(0, 1)}
           </Avatar>
         }
         action={
@@ -96,17 +96,17 @@ const ProjectCard = ({ className, project, ...rest }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={project.name}
-        subheader={project.createdAt}
+        title={project.title}
+        subheader={project.created_at}
       />
       <CardMedia
         className={classes.media}
-        image={project.image}
-        title={project.name}
+        image={"https://source.unsplash.com/random"}
+        title={project.title}
       />
       <CardContent>
         <Typography variant='h2' component='h2'>
-          {project.postedBy}
+          {project.title}
         </Typography>
         <Typography
           variant='body2'
@@ -117,10 +117,10 @@ const ProjectCard = ({ className, project, ...rest }) => {
           {project.description}
         </Typography>
         <Typography variant='h5' component='h5'>
-          Amount Offer : {project.OfferAmount}
+          Amount Offer : {project.amount}
         </Typography>
         <Typography variant='h5' component='h5'>
-          Time Duration : {project.time}
+          Time Duration : {project.duration}
         </Typography>
         <Typography variant='h5' component='h5'>
           Status : {project.status}
@@ -181,7 +181,7 @@ const ProjectCard = ({ className, project, ...rest }) => {
               Place Bid
             </Button>
             <Typography variant='h5' component='h5' className={classes.text}>
-              Total Biddings : {project.totalBiddings}
+              Total Biddings : {"1"}
             </Typography>
           </Box>
         </CardContent>

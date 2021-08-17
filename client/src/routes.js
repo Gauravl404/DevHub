@@ -36,8 +36,12 @@ const routes = [
       { path: "learn", element: <Learn /> },
       { path: "settings", element: <Settings /> },
       { path: "profile", element: <Acount /> },
+<<<<<<< HEAD
       { path: "recruiterproject", element: <RecProjects />},
       { path: "recruiterprofile", element: <RecAcount />},
+=======
+      { path: "/", element: <Navigate to='/home' /> },
+>>>>>>> gaurav
       { path: "*", element: <Navigate to='/404' /> },
     ],
   },

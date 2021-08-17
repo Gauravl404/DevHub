@@ -26,11 +26,11 @@ import {
 } from "react-feather";
 import NavItem from "./NavItem";
 
-const user = {
-  avatar: "/static/images/avatars/avatar_3.png",
-  jobTitle: "Senior Developer",
-  name: "Gaurav Jaiswal",
-};
+// const user = {
+//   avatar: "/static/images/avatars/avatar_3.png",
+//   jobTitle: "Senior Developer",
+//   name: "Gaurav Jaiswal",
+// };
 
 const items = [
   {
@@ -96,7 +96,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NavBar = ({ onMobileClose, openMobile }) => {
+const NavBar = ({ onMobileClose, openMobile, user }) => {
   const classes = useStyles();
   const location = useLocation();
 
@@ -113,14 +113,14 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
+          src={user?.image}
           to='/app/profile'
         />
         <Typography className={classes.name} color='textPrimary' variant='h5'>
-          {user.name}
+          {`${user?.first_name} ${user?.last_name}`}
         </Typography>
         <Typography color='textSecondary' variant='body2'>
-          {user.jobTitle}
+          {user?.type === "dev" ? "developer" : "Recruiter"}
         </Typography>
       </Box>
       <Divider />
@@ -170,11 +170,13 @@ const NavBar = ({ onMobileClose, openMobile }) => {
 NavBar.propTypes = {
   onMobileClose: PropTypes.func,
   openMobile: PropTypes.bool,
+  user: PropTypes.object,
 };
 
 NavBar.defaultProps = {
   onMobileClose: () => {},
   openMobile: false,
+  user: null,
 };
 
 export default NavBar;

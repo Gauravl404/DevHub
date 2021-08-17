@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -16,6 +16,7 @@ import {
 import FacebookIcon from "src/icons/Facebook";
 import GoogleIcon from "src/icons/Google";
 import Page from "src/components/Page";
+import { userContext, userSetContext } from "src/App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +35,14 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { setIsAuthenticated } = useContext(userContext);
+  const { getProfile } = useContext(userSetContext);
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/app/home", { replace: false });
+  //   }
+  // }, []);
 
   return (
     <Page className={classes.root} title='Login'>
@@ -47,8 +56,8 @@ const LogIn = () => {
           <Container>
             <Formik
               initialValues={{
-                email: "123@gmail.com",
-                password: "123",
+                email: "",
+                password: "",
               }}
               validationSchema={Yup.object().shape({
                 email: Yup.string()
@@ -59,8 +68,39 @@ const LogIn = () => {
                   .max(255)
                   .required("Password is required"),
               })}
-              onSubmit={() => {
-                navigate("/app/home", { replace: true });
+              onSubmit={async (values) => {
+                try {
+                  const body = values;
+                  console.log(JSON.stringify(body));
+
+                  const response = await fetch(
+                    "http://localhost:5000/auth/login",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-type": "application/json",
+                      },
+                      body: JSON.stringify(body),
+                    }
+                  );
+
+                  const parseRes = await response.json();
+
+                  if (parseRes.jwtToken) {
+                    localStorage.setItem("token", parseRes.jwtToken);
+                    setIsAuthenticated(true);
+                    getProfile();
+                    navigate("/app/home", { replace: true });
+                    // toast.success("Logged in Successfully");
+                  } else {
+                    setIsAuthenticated(false);
+                    // toast.error(parseRes);
+                  }
+                } catch (err) {
+                  console.error(err.message);
+                  alert("Something went wrong , please try again !");
+                }
+                //navigate("/app/home", { replace: true });
               }}
             >
               {({

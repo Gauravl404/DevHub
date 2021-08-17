@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
@@ -21,7 +21,23 @@ const useStyles = makeStyles((theme) => ({
 
 const Projects = () => {
   const classes = useStyles();
-  const [projects] = useState(data);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    try {
+      fetch("http://localhost:5000/dashboard/projects", {
+        method: "GET",
+        headers: {
+          jwt_token: localStorage.token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setProjects(data));
+    } catch (err) {
+      console.error(err.message);
+      alert("Something went wrong , please try again !");
+    }
+  }, []);
 
   return (
     <Page className={classes.root} title='Projects'>

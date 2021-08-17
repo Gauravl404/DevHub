@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Container, makeStyles } from "@material-ui/core";
 import Page from "src/components/Page";
 import Notifications from "./Notifications";
 import Password from "./Password";
 import ProfileSettings from "./ProfileSettings";
+import { userContext, userSetContext } from "src/App";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,12 +18,15 @@ const useStyles = makeStyles((theme) => ({
 const Settings = () => {
   const classes = useStyles();
 
+  const { isAuthenticated, setIsAuthenticated } = useContext(userContext);
+  const { user, setUser } = useContext(userSetContext);
+
   return (
     <Page className={classes.root} title='Settings'>
       <Container maxWidth='lg'>
         <Notifications />
         <Box mt={3}>
-          <ProfileSettings />
+          <ProfileSettings user={user} />
         </Box>
         <Box mt={3}>
           <Password />

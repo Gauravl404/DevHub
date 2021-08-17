@@ -8,6 +8,7 @@ import Toolbar from "./Toolbar";
 import VideoPlayer from "./VideoPlayer";
 import VideoList from "./VideoList";
 import Youtube from "./data";
+
 require("dotenv").config();
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +49,7 @@ const Learn = () => {
         maxResults: 5,
         key: process.env.API_KEY,
         q: searchTerm,
+        type: "video",
       },
     });
 
